@@ -1,1 +1,2 @@
-Integrate FRED API into project
+Fully integrate all endpoints (Categories, Releases, Series, Sources, Tags)
+FRED API
