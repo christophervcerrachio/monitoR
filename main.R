@@ -28,4 +28,9 @@ urlString <- paste(urlConstruct, collapse="");
 
 #API response variable
 apiResponse <- GET(urlString);
-print(apiResponse);
+
+#converting api response data into list data structure
+apiResponseData <- fromJSON(rawToChar(apiResponse$content));
+
+#SUCCESSFULLY GOT ROOT CATEGORY RESPONSE FROM DEFAULT VALUES
+print(apiResponseData);
