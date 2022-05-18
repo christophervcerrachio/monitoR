@@ -6,11 +6,33 @@ apiKey <- "api_key=03fc1426e63a56cf48dece52f36227ac";
 rootURL <- "https://api.stlouisfed.org/fred/";
 fileType <- "file_type=json";
 
-#default section VALUE and ID
-  #IF USER INPUT doesn't specify (Categories, Releases, Series, Sources, Tags)
-  #create user prompt for section specification
-userSection <- "category";
+#getting/validating section input from user
+cat("Please select a section from the following:\n");
+cat("category\nreleases(WIP)\nseries(WIP)\nsources(WIP)\ntags(WIP)\n");
+userInput <- readLines("stdin", n=1);
+while(
+  userInput != "category" &
+  userInput != "releases" &
+  userInput != "series" &
+  userInput != "sources" &
+  userInput != "tags"){
+    cat("Not a valid section, select again\n");
+    userInput <- readLines("stdin", n=1);
+  }
 
+#getting/formatting all child categories of root category
+#getting/validating id input from user
+#get/visualize series from category chosen by user
+
+
+
+
+
+
+
+
+#default section id = 0 if not specified
+userSection <- userInput;
 userSectionParam <- userSection;
 userSectionParam <- paste(userSectionParam, "_id", sep="");
 userSectionID <- "0";
@@ -32,5 +54,5 @@ apiResponse <- GET(urlString);
 #converting api response data into list data structure
 apiResponseData <- fromJSON(rawToChar(apiResponse$content));
 
-#SUCCESSFULLY GOT ROOT CATEGORY RESPONSE FROM DEFAULT VALUES
+#SUCCESSFULLY GOT ROOT CATEGORY RESPONSE
 print(apiResponseData);
