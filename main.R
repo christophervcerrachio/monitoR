@@ -56,7 +56,7 @@ while(userIDFlag == FALSE){
 }
 cat("\n"); #input/output spacing
 
-
+#HERE CURRENTLY###################################################################################
 #id selected by user from the dataframe
 selectedID <- userInput;
 
