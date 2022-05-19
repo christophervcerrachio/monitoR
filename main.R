@@ -7,7 +7,7 @@ library(jsonlite);
 
 
 
-#getting/validating section input from user
+#getting/validating section input from user (1st round)
 cat("Please select (type) a section from the following:\n");
 cat("\n\t category(ONLY OPTION)\n\t releases(WIP)\n\t series(WIP)\n\t sources(WIP)\n\t tags(WIP)\n\n");
 userInput <- readLines("stdin", n=1);
@@ -21,13 +21,6 @@ while(
     userInput <- readLines("stdin", n=1);
   }
 cat("\n"); #input/output spacing
-
-
-
-
-
-
-
 #getting/formatting all child categories of root category (use variables in get request later)
 rootChildrenResponse <- GET("https://api.stlouisfed.org/fred/category/children?category_id=0&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
 apiResponseData <- fromJSON(rawToChar(rootChildrenResponse$content));
@@ -46,7 +39,7 @@ print(responseDF, row.names=FALSE);
 
 
 
-#getting/validating id input from user
+#getting/validating id input from user (round 2)
 categoryIDVector <- responseDF$ID;
 cat("\nPlease select (type) a category id from the table for related categories\n");
 userInput <- readLines("stdin", n=1);
@@ -82,7 +75,7 @@ print(responseDF, row.names=FALSE);
 
 
 
-
+#getting/validating id input from user (round 3)
 categoryIDVector <- responseDF$ID;
 cat("\nPlease select (type) a category id from the table for related categories\n");
 userInput <- readLines("stdin", n=1);
