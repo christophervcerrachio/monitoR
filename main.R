@@ -1,10 +1,16 @@
 library(httr);
 library(jsonlite);
 
+
+
 #constants: api key, root url, file type
+#API key in place will be expired by publication
+  #Get one in minutes at https://fredaccount.stlouisfed.org/
 apiKey <- "api_key=03fc1426e63a56cf48dece52f36227ac";
 rootURL <- "https://api.stlouisfed.org/fred/";
 fileType <- "file_type=json";
+
+
 
 #getting/validating section input from user
 cat("Please select (type) a section from the following:\n");
@@ -21,11 +27,15 @@ while(
   }
 cat("\n"); #input/output spacing
 
+
+
+
+
+
+
 #getting/formatting all child categories of root category (use variables in get request later)
 rootChildrenResponse <- GET("https://api.stlouisfed.org/fred/category/children?category_id=0&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
 apiResponseData <- fromJSON(rawToChar(rootChildrenResponse$content));
-
-
 #extract children category columns id,name for further selection from user
 #make dataframe for id,name from list
 responseDF <- as.data.frame(apiResponseData);
@@ -36,9 +46,50 @@ colnames(responseDF) <- c("ID", "NAME");
 print(responseDF, row.names=FALSE);
 
 
+
+
+
+
+
 #getting/validating id input from user
 categoryIDVector <- responseDF$ID;
-cat("\nPlease select (type) a category id from the table\n");
+cat("\nPlease select (type) a category id from the table for related categories\n");
+userInput <- readLines("stdin", n=1);
+
+userIDFlag <- FALSE;
+while(userIDFlag == FALSE){
+  for(id in categoryIDVector){
+    if(id == userInput){
+      userIDFlag <- TRUE;
+      break;
+    }
+  }
+  if(userIDFlag == FALSE){
+    cat("Not a valid category id, select again\n");
+    userInput <- readLines("stdin", n=1);
+  }
+}
+cat("\n"); #input/output spacing
+#category id selected by user from the dataframe
+selectedID <- userInput;
+#get children of selected category (need to be REPEATABLE from here, down to situation where category has no children)
+selectedChildrenConstruct <- c("https://api.stlouisfed.org/fred/category/children?category_id=", selectedID,"&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
+selectedChildrenConstruct <- paste(selectedChildrenConstruct, collapse="");
+selectedChildrenConstruct <- GET(selectedChildrenConstruct);
+apiResponseData <- fromJSON(rawToChar(selectedChildrenConstruct$content));
+responseDF <- as.data.frame(apiResponseData);
+responseDF <- responseDF[, c("categories.id", "categories.name")];
+colnames(responseDF) <- c("ID", "NAME");
+print(responseDF, row.names=FALSE);
+
+
+
+
+
+
+
+categoryIDVector <- responseDF$ID;
+cat("\nPlease select (type) a category id from the table for related categories\n");
 userInput <- readLines("stdin", n=1);
 
 userIDFlag <- FALSE;
@@ -56,24 +107,6 @@ while(userIDFlag == FALSE){
 }
 cat("\n"); #input/output spacing
 
-#HERE CURRENTLY###################################################################################
-#id selected by user from the dataframe
-selectedID <- userInput;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -81,30 +114,3 @@ selectedID <- userInput;
 
 
 #get/visualize series from category chosen by user
-
-
-# #default section id = 0 if not specified
-# userSection <- userInput;
-# userSectionParam <- userSection;
-# userSectionParam <- paste(userSectionParam, "_id", sep="");
-# userSectionID <- "0";
-#
-# #building request url string from construct vector
-# urlConstruct <- c(rootURL, userSection, "?", userSectionParam, "=", userSectionID,
-# "&", apiKey,
-# "&", fileType);
-# urlString <- paste(urlConstruct, collapse="");
-#
-# #TESTING REGION###################################################################################
-#
-# #TESTING URL
-#   #"https://api.stlouisfed.org/fred/category?category_id=125&api_key=KEYHERE&file_type=json"
-#
-# #API response variable
-# apiResponse <- GET(urlString);
-#
-# #converting api response data into list data structure
-# apiResponseData <- fromJSON(rawToChar(apiResponse$content));
-#
-# #SUCCESSFULLY GOT ROOT CATEGORY RESPONSE
-# print(apiResponseData);
