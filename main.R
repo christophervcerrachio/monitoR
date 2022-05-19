@@ -3,18 +3,13 @@ library(jsonlite);
 
 
 
-#constants: api key, root url, file type
-#API key in place will be expired by publication
-  #Get one in minutes at https://fredaccount.stlouisfed.org/
-apiKey <- "api_key=03fc1426e63a56cf48dece52f36227ac";
-rootURL <- "https://api.stlouisfed.org/fred/";
-fileType <- "file_type=json";
+
 
 
 
 #getting/validating section input from user
 cat("Please select (type) a section from the following:\n");
-cat("\n\t category\n\t releases(WIP)\n\t series(WIP)\n\t sources(WIP)\n\t tags(WIP)\n\n");
+cat("\n\t category(ONLY OPTION)\n\t releases(WIP)\n\t series(WIP)\n\t sources(WIP)\n\t tags(WIP)\n\n");
 userInput <- readLines("stdin", n=1);
 while(
   userInput != "category" &
