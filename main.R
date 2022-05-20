@@ -3,12 +3,7 @@
 # library(jsonlite);
 #bringing in Fetcher.R (have access to fetcherRoot and fetcherChildren functions)
 source("Fetcher.R");
-
-
-
-
-
-#STARTUP PROMPT######################################
+#STARTUP PROMPT###############################################################
 #getting/validating section input from user (1st round)
 cat("Please select (type) a section number from the following:\n");
 cat("\n1)\tcategory(ALL OPTIONS DEFAULT TO CATEGORY)\n2)\treleases(WIP)\n3)\tseries(WIP)\n4)\tsources(WIP)\n5)\ttags(WIP)\n\n");
@@ -23,12 +18,7 @@ while(
     userInput <- readLines("stdin", n=1);
   }
 cat("\n"); #input/output spacing
-
-
-
-
-
-#CATEGORY INITIAL SHOW######################################
+#CATEGORY INITIAL SHOW########################################################
 responseDF <- fetcherRoot();
 print(responseDF, row.names=FALSE);
 
@@ -36,7 +26,7 @@ print(responseDF, row.names=FALSE);
 
 
 
-#CATEGORY CHILDREN SHOW######################################
+#CATEGORY CHILDREN SHOW#######################################################
 #getting/validating id input from user (round 2)
 categoryIDVector <- responseDF$ID;
 cat("\nPlease select (type) a category id from the table\n");

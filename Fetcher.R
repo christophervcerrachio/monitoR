@@ -31,7 +31,7 @@ fetcherChildren <- function(x){
   #IF CATEGORY HAS NO CHILDREN, json response "categories" field is EMPTY ARRAY
   #check size of categories field in responseDF#########################################
   #HERE#################################################################################
-  
+
 
 
 
