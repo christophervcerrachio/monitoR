@@ -1,7 +1,6 @@
-#test whether dependencies are included by Fether.R
-library(httr);
-library(jsonlite);
-
+#test whether dependencies are included by Fether.R (DON'T NEED, COMES WITH Fether.R)
+# library(httr);
+# library(jsonlite);
 #bringing in Fetcher.R (have access to fetcherRoot and fetcherChildren functions)
 source("Fetcher.R");
 
@@ -11,15 +10,15 @@ source("Fetcher.R");
 
 #STARTUP PROMPT######################################
 #getting/validating section input from user (1st round)
-cat("Please select (type) a section from the following:\n");
-cat("\n\t category(ALL OPTIONS DEFAULT TO CATEGORY AS OF NOW)\n\t releases(WIP)\n\t series(WIP)\n\t sources(WIP)\n\t tags(WIP)\n\n");
+cat("Please select (type) a section number from the following:\n");
+cat("\n1)\tcategory(ALL OPTIONS DEFAULT TO CATEGORY)\n2)\treleases(WIP)\n3)\tseries(WIP)\n4)\tsources(WIP)\n5)\ttags(WIP)\n\n");
 userInput <- readLines("stdin", n=1);
 while(
-  userInput != "category" &
-  userInput != "releases" &
-  userInput != "series" &
-  userInput != "sources" &
-  userInput != "tags"){
+  userInput != "1" &
+  userInput != "2" &
+  userInput != "3" &
+  userInput != "4" &
+  userInput != "5"){
     cat("Not a valid section, select again\n");
     userInput <- readLines("stdin", n=1);
   }
