@@ -16,7 +16,7 @@ fetcherRoot <- function(){
   responseDF;
 }
 
-#x = category id
+#x = category id selected from user
 #NEED LOGIC/HELPER FUNCTION hasChildren
 fetcherChildren <- function(x){
   #category id selected by user from the dataframe
@@ -27,6 +27,16 @@ fetcherChildren <- function(x){
   selectedChildrenConstruct <- GET(selectedChildrenConstruct);
   apiResponseData <- fromJSON(rawToChar(selectedChildrenConstruct$content));
   responseDF <- as.data.frame(apiResponseData);
+
+  #IF CATEGORY HAS NO CHILDREN, json response "categories" field is EMPTY ARRAY
+  #check size of categories field in responseDF#########################################
+  #HERE#################################################################################
+  
+
+
+
+
+
   responseDF <- responseDF[, c("categories.id", "categories.name")];
   colnames(responseDF) <- c("ID", "NAME");
   responseDF;
