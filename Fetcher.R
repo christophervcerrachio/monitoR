@@ -27,16 +27,6 @@ fetcherChildren <- function(x){
   selectedChildrenConstruct <- GET(selectedChildrenConstruct);
   apiResponseData <- fromJSON(rawToChar(selectedChildrenConstruct$content));
   responseDF <- as.data.frame(apiResponseData);
-
-  #IF CATEGORY HAS NO CHILDREN, json response "categories" field is EMPTY ARRAY
-  #check size of categories field in responseDF#########################################
-  #HERE#################################################################################
-
-
-
-
-
-
   responseDF <- responseDF[, c("categories.id", "categories.name")];
   colnames(responseDF) <- c("ID", "NAME");
   responseDF;
