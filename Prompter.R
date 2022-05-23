@@ -12,12 +12,14 @@ prompter <- function(df){
   if(length(categoryIDVector) == 0){
     #ACCOUNT FOR OPTIONS OF CATEGORY WITH ZERO CHILDREN#####################
     cat("No children or related categories of selected category\n");
-    cat("Would you like to see the series of this category? [y/n]\n");
+    cat("Would you like to see the series of this category? [y/n]: ");
     userInputConfirm <- readLines("stdin", n=1);
     if(userInputConfirm == "y"){
 
-        #SERIES OPTIONS START HERE
-        return;
+      #SERIES SELECTION STARTS HERE
+      responseDF <- fetcherCategorySeries(userInput);
+      print(responseDF, row.names=FALSE);
+      prompterSeries(responseDF);
 
     }else{
 
@@ -50,18 +52,18 @@ prompter <- function(df){
   cat("\n"); #input/output spacing
 
 #OPTIONS FOR CATEGORY MATCHING USER INPUT###################################
-#HAVE TO PRESENT THESE OPTIONS IN BASE CASE (categoryIDVector length = 0) make a function
-  cat("Would you like to see the series of this category? [y/n]\n");
+  cat("Would you like to see the series of this category? [y/n]: ");
   userInputConfirm <- readLines("stdin", n=1);
   if(userInputConfirm == "y"){
 
-      #present options for a selected category
-      cat("WOULD BE SERIES OPTIONS FOR SELECTED CATEGORY");
-      return;
+    #SERIES SELECTION START HERE
+    responseDF <- fetcherCategorySeries(userInput);
+    print(responseDF, row.names=FALSE);
+    prompterSeries(responseDF);
 
   }else{
 
-    cat("\nWould you like to see the children categories of this category? [y/n]\n");
+    cat("\nWould you like to see the children categories of this category? [y/n]: ");
     userInputConfirm <- readLines("stdin", n=1);
     if(userInputConfirm == "y"){
 
@@ -80,6 +82,10 @@ prompter <- function(df){
 
     }
   }
+}
 
+
+#SEPARATE PROMPT PROCESS FOR SERIES SELECTION
+prompterSeries <- function(df){
 
 }

@@ -31,3 +31,21 @@ fetcherChildren <- function(x){
   colnames(responseDF) <- c("ID", "NAME");
   responseDF;
 }
+
+fetcherCategorySeries <- function(x){
+
+  selectedID <- x;
+
+  selectedSeriesConstruct <- c("https://api.stlouisfed.org/fred/category/series?category_id=", selectedID,"&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
+  selectedSeriesConstruct <- paste(selectedSeriesConstruct, collapse="");
+  selectedSeriesConstruct <- GET(selectedSeriesConstruct);
+  apiResponseData <- fromJSON(rawToChar(selectedSeriesConstruct$content));
+  responseDF <- as.data.frame(apiResponseData);
+  responseDF <- responseDF[, c("seriess.id", "seriess.title")];
+  colnames(responseDF) <- c("ID", "TITLE");
+  responseDF;
+}
+
+fetcherSeriesSeries <- function(x){
+  
+}
