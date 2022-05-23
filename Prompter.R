@@ -11,9 +11,26 @@ prompter <- function(df){
 #BASE CASE FOR RECURSIVE PROMPTS############################################
   if(length(categoryIDVector) == 0){
     #ACCOUNT FOR OPTIONS OF CATEGORY WITH ZERO CHILDREN#####################
-    cat("categoryIDVector length = 0");
-    return;
-  }
+    cat("No children or related categories of selected category\n");
+    cat("Would you like to see the series of this category? [y/n]\n");
+    userInputConfirm <- readLines("stdin", n=1);
+    if(userInputConfirm == "y"){
+
+        #SERIES OPTIONS START HERE
+        return;
+
+    }else{
+
+        cat("Going back to initial categories...\n");
+
+        #go back to root children
+        responseDF <- fetcherRoot();
+        print(responseDF, row.names=FALSE);
+        prompter(responseDF);
+
+      }
+    }
+
 
   cat("\nPlease select (type) a category id from the table\n");
   userInput <- readLines("stdin", n=1);
@@ -55,16 +72,12 @@ prompter <- function(df){
 
     }else{
 
-      cat("\nWould you like to go back to start (root children) [y/n]\n");
-      userInputConfirm <- readLines("stdin", n=1);
-      if(userInputConfirm == "y"){
-
+        cat("Going back to initial categories...\n");
         #go back to root children
         responseDF <- fetcherRoot();
         print(responseDF, row.names=FALSE);
         prompter(responseDF);
 
-      }
     }
   }
 
