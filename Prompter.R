@@ -11,15 +11,21 @@ prompter <- function(df){
 #BASE CASE FOR RECURSIVE PROMPTS############################################
   if(length(categoryIDVector) == 0){
     #ACCOUNT FOR OPTIONS OF CATEGORY WITH ZERO CHILDREN#####################
-    cat("No children or related categories of selected category\n");
+    cat("No children categories of selected category\n");
     cat("Would you like to see the series of this category? [y/n]: ");
     userInputConfirm <- readLines("stdin", n=1);
     if(userInputConfirm == "y"){
 
-      #SERIES SELECTION STARTS HERE
-      responseDF <- fetcherCategorySeries(userInput);
-      print(responseDF, row.names=FALSE);
-      prompterSeries(responseDF);
+      #SERIES SELECTION START HERE
+      responseDFTemp <- fetcherCategorySeries(userInput);
+      if(length(responseDFTemp$seriess) != 0){
+        print(responseDFTemp, row.names=FALSE);
+        prompterSeries(responseDF);
+      }else{
+        cat("No series for this category, choose another\n");
+        print(responseDF, row.names=FALSE);
+        prompter(responseDF);
+      }
 
     }else{
 
@@ -56,10 +62,17 @@ prompter <- function(df){
   userInputConfirm <- readLines("stdin", n=1);
   if(userInputConfirm == "y"){
 
-    #SERIES SELECTION START HERE
-    responseDF <- fetcherCategorySeries(userInput);
-    print(responseDF, row.names=FALSE);
-    prompterSeries(responseDF);
+    #HERE TESTING 32991 and 10
+    responseDFTemp <- fetcherCategorySeries(userInput);
+    if(is.double(responseDFTemp) != TRUE){
+      print(responseDFTemp, row.names=FALSE);
+      prompterSeries(responseDFTemp);
+    }else{
+      cat("\nNo series for this category, choose another\n");
+      print(responseDF, row.names=FALSE);
+      prompter(responseDF);
+    }
+
 
   }else{
 
@@ -87,5 +100,9 @@ prompter <- function(df){
 
 #SEPARATE PROMPT PROCESS FOR SERIES SELECTION
 prompterSeries <- function(df){
+  cat("\nnow in prompterSeries\n");
+  # seriesIDVector <- df$ID;
+
+
 
 }

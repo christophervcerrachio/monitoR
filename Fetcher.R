@@ -40,12 +40,22 @@ fetcherCategorySeries <- function(x){
   selectedSeriesConstruct <- paste(selectedSeriesConstruct, collapse="");
   selectedSeriesConstruct <- GET(selectedSeriesConstruct);
   apiResponseData <- fromJSON(rawToChar(selectedSeriesConstruct$content));
-  responseDF <- as.data.frame(apiResponseData);
-  responseDF <- responseDF[, c("seriess.id", "seriess.title")];
-  colnames(responseDF) <- c("ID", "TITLE");
-  responseDF;
+  if(length(apiResponseData$seriess) != 0){
+    responseDF <- as.data.frame(apiResponseData$seriess);
+    responseDF <- responseDF[, c("id", "title")];
+    colnames(responseDF) <- c("ID", "TITLE");
+    responseDF;
+  }else{
+    return(-1);
+  }
+
 }
 
+
+
+
+
+
 fetcherSeriesSeries <- function(x){
-  
+
 }
