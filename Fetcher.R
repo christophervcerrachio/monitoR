@@ -38,6 +38,10 @@ fetcherCategorySeries <- function(id){
     }
 }
 #########################################################################################
-fetcherSeriesSeries <- function(x){
+fetcherSeriesSeries <- function(id){
+
+
+
+
 
 }
