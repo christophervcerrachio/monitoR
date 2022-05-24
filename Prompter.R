@@ -9,8 +9,18 @@ prompter <- function(df){
         if(userInputConfirm == "y"){
             responseDFTemp <- fetcherCategorySeries(userInput);
             if(length(responseDFTemp$seriess) != 0){
+
+
+
+
+
                 print(responseDFTemp, row.names=FALSE);
                 prompterSeries(responseDF);
+
+
+
+
+
             }else{
                 cat("No series for this category, choose another\n");
                 print(responseDF, row.names=FALSE);
@@ -47,8 +57,18 @@ prompter <- function(df){
     if(userInputConfirm == "y"){
         responseDFTemp <- fetcherCategorySeries(userInput);
         if(is.double(responseDFTemp) != TRUE){
+
+
+
+
+
             print(responseDFTemp, row.names=FALSE);
             prompterSeries(responseDFTemp);
+
+
+
+
+            
         }else{
             cat("\nNo series for this category, choose another\n");
             print(responseDF, row.names=FALSE);
