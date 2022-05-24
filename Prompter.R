@@ -1,5 +1,5 @@
 source("Fetcher.R");
-
+#########################################################################################
 prompter <- function(df){
     categoryIDVector <- df$ID;
     if(length(categoryIDVector) == 0){
@@ -23,7 +23,7 @@ prompter <- function(df){
             prompter(responseDF);
         }
     }
-  #########################################################################################
+#########################################################################################
     cat("\nPlease select (type) a category id from the table\n");
     userInput <- readLines("stdin", n=1);
     userIDFlag <- FALSE;
@@ -40,7 +40,7 @@ prompter <- function(df){
         }
 
     }
-  #########################################################################################
+#########################################################################################
     cat("\n");
     cat("Would you like to see the series of this category? [y/n]: ");
     userInputConfirm <- readLines("stdin", n=1);
@@ -72,6 +72,6 @@ prompter <- function(df){
 #########################################################################################
 prompterSeries <- function(df){
 
-    
+
 
 }
