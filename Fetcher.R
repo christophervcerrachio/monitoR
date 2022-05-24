@@ -39,9 +39,17 @@ fetcherCategorySeries <- function(id){
 }
 #########################################################################################
 fetcherSeriesSeries <- function(id){
-
-
-
-
-
+    selectedID <- id;
+    selectedSeriesDataConstruct <- c("https://api.stlouisfed.org/fred/series/observations?series_id=", selectedID,"&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
+    selectedSeriesDataConstruct <- paste(selectedSeriesDataConstruct, collapse="");
+    selectedSeriesDataConstruct <- GET(selectedSeriesDataConstruct);
+    apiResponseData <- fromJSON(rawToChar(selectedSeriesDataConstruct$content));
+    if(length(apiResponseData$observations) != 0){
+        responseDF <- as.data.frame(apiResponseData$observations);
+        responseDF <- responseDF[, c("date", "value")];
+        colnames(responseDF) <- c("DATE", "VALUE");
+        responseDF;
+    }else{
+        return(-1);
+    }
 }

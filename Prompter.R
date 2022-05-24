@@ -119,9 +119,19 @@ prompterSeries <- function(df){
     cat("Would you like to see the observational data of this series? [y/n]: ");
     userInputConfirm <- readLines("stdin", n=1);
     if(userInputConfirm == "y"){
+
+
+
+
+        #NEED TO CHECK FOR -1 RESPONSE FROM fetcherSeriesSeries FUNCTION
         responseDFTemp<- fetcherSeriesSeries(userInput);
         print(responseDFTemp, row.names=FALSE);
         prompterSeriesData(responseDFTemp);
+
+
+
+
+
     }else{
         cat("Going back to initial categories\n\n");
         responseDF <- fetcherRoot();
