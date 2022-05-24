@@ -10,8 +10,8 @@ fetcherRoot <- function(){
     responseDF;
 }
 #########################################################################################
-fetcherChildren <- function(x){
-    selectedID <- x;
+fetcherChildren <- function(id){
+    selectedID <- id;
     selectedChildrenConstruct <- c("https://api.stlouisfed.org/fred/category/children?category_id=", selectedID,"&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
     selectedChildrenConstruct <- paste(selectedChildrenConstruct, collapse="");
     selectedChildrenConstruct <- GET(selectedChildrenConstruct);
@@ -22,8 +22,8 @@ fetcherChildren <- function(x){
     responseDF;
 }
 #########################################################################################
-fetcherCategorySeries <- function(x){
-    selectedID <- x;
+fetcherCategorySeries <- function(id){
+    selectedID <- id;
     selectedSeriesConstruct <- c("https://api.stlouisfed.org/fred/category/series?category_id=", selectedID,"&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
     selectedSeriesConstruct <- paste(selectedSeriesConstruct, collapse="");
     selectedSeriesConstruct <- GET(selectedSeriesConstruct);
