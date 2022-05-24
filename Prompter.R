@@ -55,6 +55,7 @@ prompter <- function(df){
             prompter(responseDF);
         }
     }else{
+#########################################################################################
         cat("\nWould you like to see the children categories of this category? [y/n]: ");
         userInputConfirm <- readLines("stdin", n=1);
         if(userInputConfirm == "y"){
