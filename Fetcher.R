@@ -1,61 +1,43 @@
 library(httr);
 library(jsonlite);
 
-#to be run once at selection of category section
 fetcherRoot <- function(){
-  #getting/formatting all child categories of root category (use variables in get request later)
-  rootChildrenResponse <- GET("https://api.stlouisfed.org/fred/category/children?category_id=0&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
-  apiResponseData <- fromJSON(rawToChar(rootChildrenResponse$content));
-  #extract children category columns id,name for further selection from user
-  #make dataframe for id,name from list
-  responseDF <- as.data.frame(apiResponseData);
-  #isolating id,name columns in new dataframe
-  responseDF <- responseDF[, c("categories.id", "categories.name")];
-  #changing column names in new dataframe
-  colnames(responseDF) <- c("ID", "NAME");
-  responseDF;
-}
-
-#x = category id selected from user
-#NEED LOGIC/HELPER FUNCTION hasChildren
-fetcherChildren <- function(x){
-  #category id selected by user from the dataframe
-  selectedID <- x;
-  #get children of selected category (need to be REPEATABLE from here, down to situation where category has no children)
-  selectedChildrenConstruct <- c("https://api.stlouisfed.org/fred/category/children?category_id=", selectedID,"&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
-  selectedChildrenConstruct <- paste(selectedChildrenConstruct, collapse="");
-  selectedChildrenConstruct <- GET(selectedChildrenConstruct);
-  apiResponseData <- fromJSON(rawToChar(selectedChildrenConstruct$content));
-  responseDF <- as.data.frame(apiResponseData);
-  responseDF <- responseDF[, c("categories.id", "categories.name")];
-  colnames(responseDF) <- c("ID", "NAME");
-  responseDF;
-}
-
-fetcherCategorySeries <- function(x){
-
-  selectedID <- x;
-
-  selectedSeriesConstruct <- c("https://api.stlouisfed.org/fred/category/series?category_id=", selectedID,"&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
-  selectedSeriesConstruct <- paste(selectedSeriesConstruct, collapse="");
-  selectedSeriesConstruct <- GET(selectedSeriesConstruct);
-  apiResponseData <- fromJSON(rawToChar(selectedSeriesConstruct$content));
-  if(length(apiResponseData$seriess) != 0){
-    responseDF <- as.data.frame(apiResponseData$seriess);
-    responseDF <- responseDF[, c("id", "title")];
-    colnames(responseDF) <- c("ID", "TITLE");
+    rootChildrenResponse <- GET("https://api.stlouisfed.org/fred/category/children?category_id=0&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
+    apiResponseData <- fromJSON(rawToChar(rootChildrenResponse$content));
+    responseDF <- as.data.frame(apiResponseData);
+    responseDF <- responseDF[, c("categories.id", "categories.name")];
+    colnames(responseDF) <- c("ID", "NAME");
     responseDF;
-  }else{
-    return(-1);
-  }
-
 }
-
-
-
-
-
-
+#########################################################################################
+fetcherChildren <- function(x){
+    selectedID <- x;
+    selectedChildrenConstruct <- c("https://api.stlouisfed.org/fred/category/children?category_id=", selectedID,"&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
+    selectedChildrenConstruct <- paste(selectedChildrenConstruct, collapse="");
+    selectedChildrenConstruct <- GET(selectedChildrenConstruct);
+    apiResponseData <- fromJSON(rawToChar(selectedChildrenConstruct$content));
+    responseDF <- as.data.frame(apiResponseData);
+    responseDF <- responseDF[, c("categories.id", "categories.name")];
+    colnames(responseDF) <- c("ID", "NAME");
+    responseDF;
+}
+#########################################################################################
+fetcherCategorySeries <- function(x){
+    selectedID <- x;
+    selectedSeriesConstruct <- c("https://api.stlouisfed.org/fred/category/series?category_id=", selectedID,"&api_key=03fc1426e63a56cf48dece52f36227ac&file_type=json");
+    selectedSeriesConstruct <- paste(selectedSeriesConstruct, collapse="");
+    selectedSeriesConstruct <- GET(selectedSeriesConstruct);
+    apiResponseData <- fromJSON(rawToChar(selectedSeriesConstruct$content));
+    if(length(apiResponseData$seriess) != 0){
+        responseDF <- as.data.frame(apiResponseData$seriess);
+        responseDF <- responseDF[, c("id", "title")];
+        colnames(responseDF) <- c("ID", "TITLE");
+        responseDF;
+    }else{
+        return(-1);
+    }
+}
+#########################################################################################
 fetcherSeriesSeries <- function(x){
 
 }
