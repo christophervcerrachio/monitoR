@@ -122,9 +122,9 @@ prompterSeries <- function(df){
 
 
 
-
+        #HERE, last output NULL is empty call to prompterSeriesData function
         #NEED TO CHECK FOR -1 RESPONSE FROM fetcherSeriesSeries FUNCTION
-        responseDFTemp<- fetcherSeriesSeries(userInput);
+        responseDFTemp <- fetcherSeriesSeries(userInput);
         print(responseDFTemp, row.names=FALSE);
         prompterSeriesData(responseDFTemp);
 
