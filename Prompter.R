@@ -36,7 +36,7 @@ prompter <- function(df){
             }
         }
         if(userIDFlag == FALSE){
-            cat("Not a valid category id, select again\n");
+            cat("\nNot a valid category id, select again\n");
             userInput <- readLines("stdin", n=1);
         }
     }
@@ -93,7 +93,7 @@ prompterSeries <- function(df){
     }
     cat("\n");
 #########################################################################################
-    cat("\nWould you like to see the observational data of this series? [y/n]: ");
+    cat("Would you like to see the observational data of this series? [y/n]: ");
     userInputConfirm <- readLines("stdin", n=1);
     if(userInputConfirm == "y"){
         #even DISCONTINUED series contain time series data in response
@@ -117,13 +117,19 @@ prompterSeriesData <- function(df){
         timeSeriesJSON <- toJSON(df);
         write(timeSeriesJSON, "data.json");
     }else{
-        cat("\nWould you like to visualize the observational data of this series? [y/n]: ");
+        cat("\nWould you like to export the observational data visualization of this series? [y/n]: ");
         userInputConfirm <- readLines("stdin", n=1);
         if(userInputConfirm == "y"){
-            #visualize data
-            #NEED TO MAKE VECTOR, EACH OBSERVATION IS A SEPARATE OBJECT IN VECTOR AS OF NOW
-            timeSeriesPlot <- ggplot(data = df, mapping = aes(x = DATE, y = VALUE));
+            for(row in 1:nrow(df)){
+              a <- df[row,]$DATE;
+              b <- as.factor(a);
+              d <- strptime(b, format = "%Y-%m-%d");
+              e <- as.Date(d, format = "%Y-%m-%d");
+              df[row,]$DATA <- e;
+            }
+            timeSeriesPlot <- ggplot(data = df, mapping = aes(x = DATE, y = VALUE, group = 1));
             timeSeriesPlot + geom_line();
+            ggsave("data.png");
         }else{
             cat("Going back to initial categories\n\n");
             responseDF <- fetcherRoot();
