@@ -92,7 +92,7 @@ prompterSeries <- function(df){
     }
     cat("\n");
 #########################################################################################
-    cat("Would you like to see the observational data of this series? [y/n]: ");
+    cat("\nWould you like to see the observational data of this series? [y/n]: ");
     userInputConfirm <- readLines("stdin", n=1);
     if(userInputConfirm == "y"){
         #even DISCONTINUED series contain time series data in response
@@ -109,13 +109,14 @@ prompterSeries <- function(df){
 }
 #########################################################################################
 prompterSeriesData <- function(df){
-    cat("Would you like to export the observational data of this series? [y/n]: ");
+    cat("\nWould you like to export the observational data of this series? [y/n]: ");
     userInputConfirm <- readLines("stdin", n=1);
     if(userInputConfirm == "y"){
         #export data to local directory as a json file
-
+        timeSeriesJSON <- toJSON(df);
+        write(timeSeriesJSON, "data.json");
     }else{
-        cat("Would you like to visualize the observational data of this series? [y/n]: ");
+        cat("\nWould you like to visualize the observational data of this series? [y/n]: ");
         userInputConfirm <- readLines("stdin", n=1);
         if(userInputConfirm == "y"){
             #visualize data
