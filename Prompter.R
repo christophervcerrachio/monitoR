@@ -9,18 +9,8 @@ prompter <- function(df){
         if(userInputConfirm == "y"){
             responseDFTemp <- fetcherCategorySeries(userInput);
             if(length(responseDFTemp$seriess) != 0){
-
-
-
-
-
                 print(responseDFTemp, row.names=FALSE);
                 prompterSeries(responseDF);
-
-
-
-
-
             }else{
                 cat("No series for this category, choose another\n\n");
                 print(responseDF, row.names=FALSE);
@@ -55,20 +45,13 @@ prompter <- function(df){
     userInputConfirm <- readLines("stdin", n=1);
     if(userInputConfirm == "y"){
         responseDFTemp <- fetcherCategorySeries(userInput);
+        #checking for -1 response from fetcherCategorySeries function
+          #no series for selected category
         if(is.double(responseDFTemp) != TRUE){
-
-
-
-
-
             print(responseDFTemp, row.names=FALSE);
             prompterSeries(responseDFTemp);
-
-
-
-
-
         }else{
+            #when fetcherCategorySeries function returns -1
             cat("\nNo series for this category, choose another\n\n");
             print(responseDF, row.names=FALSE);
             prompter(responseDF);
@@ -91,13 +74,6 @@ prompter <- function(df){
 }
 #########################################################################################
 prompterSeries <- function(df){
-#look at api docs for possibilities with data
-#can get observational data (time series)
-#prompt user to select series id
-  #validate input with prior code
-    #write fetcherSeriesSeries function to request time series data
-      #format appropriately for presentation/further use (visualization, etc.)
-        #present data options with prompterSeriesData function
     seriesIDVector <- df$ID;
     cat("\nPlease select (type) a series id from the table\n");
     userInput <- readLines("stdin", n=1);
@@ -119,19 +95,11 @@ prompterSeries <- function(df){
     cat("Would you like to see the observational data of this series? [y/n]: ");
     userInputConfirm <- readLines("stdin", n=1);
     if(userInputConfirm == "y"){
-
-
-
-        #HERE, last output NULL is empty call to prompterSeriesData function
-        #NEED TO CHECK FOR -1 RESPONSE FROM fetcherSeriesSeries FUNCTION
+        #even DISCONTINUED series contain time series data in response
+        #fetcherSeriesSeries -1 return value might not be needed
         responseDFTemp <- fetcherSeriesSeries(userInput);
         print(responseDFTemp, row.names=FALSE);
         prompterSeriesData(responseDFTemp);
-
-
-
-
-
     }else{
         cat("Going back to initial categories\n\n");
         responseDF <- fetcherRoot();
@@ -141,9 +109,22 @@ prompterSeries <- function(df){
 }
 #########################################################################################
 prompterSeriesData <- function(df){
+    cat("Would you like to export the observational data of this series? [y/n]: ");
+    userInputConfirm <- readLines("stdin", n=1);
+    if(userInputConfirm == "y"){
+        #export data to local directory as a json file
 
+    }else{
+        cat("Would you like to visualize the observational data of this series? [y/n]: ");
+        userInputConfirm <- readLines("stdin", n=1);
+        if(userInputConfirm == "y"){
+            #export data to local directory as a json file
 
-
-
-
+        }else{
+            cat("Going back to initial categories\n\n");
+            responseDF <- fetcherRoot();
+            print(responseDF, row.names=FALSE);
+            prompter(responseDF);
+        }
+    }
 }

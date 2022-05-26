@@ -3,8 +3,6 @@ library(jsonlite);
 apiKey <- readChar("APIKEY.txt", (file.info("APIKEY.txt")$size) - 1);
 
 fetcherRoot <- function(){
-    print(apiKey);
-
     rootChildrenConstruct <- c("https://api.stlouisfed.org/fred/category/children?category_id=0&api_key=", apiKey, "&file_type=json")
     rootChildrenConstruct <- paste(rootChildrenConstruct, collapse="");
     rootChildrenConstruct <- GET(rootChildrenConstruct);
