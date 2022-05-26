@@ -118,7 +118,7 @@ prompterSeriesData <- function(df){
         cat("Would you like to visualize the observational data of this series? [y/n]: ");
         userInputConfirm <- readLines("stdin", n=1);
         if(userInputConfirm == "y"){
-            #export data to local directory as a json file
+            #visualize data
 
         }else{
             cat("Going back to initial categories\n\n");
