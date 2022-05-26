@@ -1,3 +1,4 @@
+library("ggplot2");
 source("Fetcher.R");
 #########################################################################################
 prompter <- function(df){
@@ -120,7 +121,9 @@ prompterSeriesData <- function(df){
         userInputConfirm <- readLines("stdin", n=1);
         if(userInputConfirm == "y"){
             #visualize data
-
+            #NEED TO MAKE VECTOR, EACH OBSERVATION IS A SEPARATE OBJECT IN VECTOR AS OF NOW
+            timeSeriesPlot <- ggplot(data = df, mapping = aes(x = DATE, y = VALUE));
+            timeSeriesPlot + geom_line();
         }else{
             cat("Going back to initial categories\n\n");
             responseDF <- fetcherRoot();
